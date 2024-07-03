@@ -35,7 +35,7 @@ export default function HelpForm (props) {
       status: 'new'
     }
 
-    axios.post(`${apiUrl}/submitTickets`, form)
+    axios.post(`${process.env.REACT_APP_API_URL}/submitTickets`, form)
         .then(response => {
           setName('');
           setSubject('');

@@ -16,7 +16,7 @@ export default function AdminPage (props) {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    axios.get(`${apiUrl}/tickets`)
+    axios.get(`${process.env.REACT_APP_API_URL}/tickets`)
         .then(response => {
           setTickets(response.data.Tickets)
         })
@@ -42,7 +42,7 @@ export default function AdminPage (props) {
     const id = ticket.id
     axios.put(`${process.env.REACT_APP_API_URL}/deleteTickets`, {id: id})
         .then(response => {
-          axios.get('https://zealthy-helpdesk-api-vert.vercel.app/tickets')
+          axios.get(`${process.env.REACT_APP_API_URL}/tickets`)
               .then(response => {
                 setTickets(response.data.Tickets)
               })
@@ -61,16 +61,16 @@ export default function AdminPage (props) {
   }
 
   const handleInfoRequest = (ticketId, comment) => {
-    axios.put(`${apiUrl}/requestComments`, {id: ticketId, comment})
+    axios.put(`${process.env.REACT_APP_API_URL}/requestComments`, {id: ticketId, comment})
         .then(response => {
           setTicketId(0);
-          setIsRequestVisible(true);
-          success(true)
+          setIsRequestVisible(false);
+          setSuccess(true)
         })
         .catch(error => {
           console.log(error);
           setTicketId(0);
-          setIsRequestVisible(true);
+          setIsRequestVisible(false);
         });
   }
 
@@ -92,7 +92,7 @@ export default function AdminPage (props) {
         <StatusFilter showAll={false} label={'Status'} filter={ticket.status} width={'200px'} onChange={(e) => setNewStatus(e, ticket, i)} />
         </TableCell>
         <TableCell>
-        <Button onClick={() => openInfoRequest(ticket)}>Request further information </Button>
+        <Button onClick={() => openInfoRequest(ticket)}>Reply </Button>
         </TableCell>
         <TableCell>
           <IconButton onClick={() => deleteTickets(ticket, i)} aria-label="delete" >
