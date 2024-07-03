@@ -19,6 +19,11 @@ const theme = createTheme({
       contrastText: '#000',
     },
   },
+  typography: {
+    button: {
+      textTransform: "none"
+    }
+  }
 });
 
 root.render(
